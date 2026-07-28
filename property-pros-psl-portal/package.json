@@ -1,0 +1,19 @@
+{
+  "name": "property-pros-psl",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vinext dev",
+    "build": "vinext build",
+    "preview": "vinext start"
+  },
+  "dependencies": {
+    "vinext": "1.0.0-beta.4",
+    "react": "latest",
+    "react-dom": "latest",
+    "lucide-react": "latest"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-rsc": "latest"
+  }
+}
