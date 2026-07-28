@@ -98,18 +98,24 @@ function PublicSite({ openQuote, enterPortal }) {
             </div>
             <div className="trust-row"><span><Check/> Monthly property checkups</span><span><Check/> Local Treasure Coast team</span><span><Check/> One point of contact</span></div>
           </div>
-          <div className="hero-card">
-            <span className="eyebrow">YOUR PROPERTY AT A GLANCE</span>
-            <div className="property-card">
-              <div><span>Next visit</span><b>Pool service</b><small>Tomorrow · 10:00 AM</small></div><span className="round-icon blue"><Droplets/></span>
+          <div className="hero-showcase">
+            <div className="hero-membership">
+              <span className="hero-membership-icon"><Wrench/></span>
+              <div><small>THE PROPERTY PROS DIFFERENCE</small><h2>Monthly Property Maintenance</h2><p>Preventive checkups, minor upkeep, priority scheduling, and clear visit reports.</p></div>
+              <button onClick={openQuote}>Explore membership <ArrowRight size={16}/></button>
             </div>
-            <div className="mini-services">
-              <div><Droplets/><span>Pool<b>Crystal clear</b></span><Check/></div>
-              <div><ShieldCheck/><span>Pest<b>Protected</b></span><Check/></div>
-              <div><Leaf/><span>Landscape<b>On schedule</b></span><Check/></div>
-              <div><Wrench/><span>Maintenance<b>Handled</b></span><Check/></div>
+            <div className="hero-service-grid">
+              {[
+                ["Pool Care", "Piranha Pools", Droplets, "blue"],
+                ["Pest Control", "Pesky Pests", ShieldCheck, "red"],
+                ["Landscaping", "Paradise Properties", Leaf, "green"]
+              ].map(([title, division, Icon, tone]) => (
+                <a href="#services" className={`hero-service ${tone}`} key={title}>
+                  <span><Icon/></span><div><small>{division}</small><b>{title}</b></div><ChevronRight/>
+                </a>
+              ))}
             </div>
-            <div className="bundle"><span><Zap/> Bundle & save</span><b>One account. One bill.</b><small>Complete care made simple.</small></div>
+            <div className="hero-promise"><Check/> One local company coordinating every service for your property.</div>
           </div>
         </section>
 
