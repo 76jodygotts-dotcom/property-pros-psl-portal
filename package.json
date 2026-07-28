@@ -3,17 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "vinext dev",
-    "build": "vinext build",
-    "preview": "vinext start"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "vinext": "1.0.0-beta.4",
+    "next": "latest",
     "react": "latest",
     "react-dom": "latest",
     "lucide-react": "latest"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-rsc": "latest"
   }
 }
