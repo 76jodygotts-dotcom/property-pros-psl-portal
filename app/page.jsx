@@ -1,0 +1,235 @@
+"use client";
+import React, { useState } from "react";
+import {
+  ArrowRight, BarChart3, Bell, CalendarDays, Check, ChevronRight, CircleDollarSign,
+  ClipboardCheck, Clock3, CreditCard, Droplets, FileText, Home, LayoutDashboard,
+  Leaf, Menu, MessageSquare, Phone, Plus, Search, ShieldCheck, Sparkles, Users,
+  Wrench, X, Zap
+} from "lucide-react";
+
+const brands = [
+  { name: "Piranha Pools", short: "Pools", color: "#00a8d8", img: "/brands/Piranha-Pools-PSL.png", copy: "Weekly pool care, inspections, repairs, and cleanups.", price: "From $165/mo", icon: Droplets },
+  { name: "Pesky Pests", short: "Pest", color: "#ef3d42", img: "/brands/Pesky-Pests-PSL.png", copy: "Dependable home pest protection with recurring service.", price: "Request pricing", icon: ShieldCheck },
+  { name: "Paradise Properties Landscape", short: "Landscape", color: "#51aa42", img: "/brands/Paradise-Properties-Landscape-PSL-White-Background.png", copy: "Lawn, landscape, and exterior property care.", price: "Request pricing", icon: Leaf },
+];
+
+const jobs = [
+  { time: "8:00 AM", customer: "M. Robinson", type: "Weekly Pool Service", tech: "Carlos M.", brand: "Pools", status: "In progress", color: "blue" },
+  { time: "9:30 AM", customer: "A. Turner", type: "Pest Initial Treatment", tech: "Maya J.", brand: "Pest", status: "Scheduled", color: "red" },
+  { time: "11:00 AM", customer: "T. Harris", type: "Lawn Maintenance", tech: "Devon R.", brand: "Landscape", status: "Scheduled", color: "green" },
+  { time: "1:00 PM", customer: "L. Foster", type: "Pool Inspection", tech: "Carlos M.", brand: "Pools", status: "Confirmed", color: "blue" },
+  { time: "2:30 PM", customer: "K. Jensen", type: "Bundle Walkthrough", tech: "Jody G.", brand: "Property Pros", status: "Estimate", color: "gold" },
+];
+
+const leads = [
+  { name: "Sarah Miller", service: "Full property bundle", source: "Website", value: "$425/mo", age: "8 min", score: "Hot" },
+  { name: "Ronald Clark", service: "Pool full service", source: "Google", value: "$165/mo", age: "42 min", score: "New" },
+  { name: "Nicole Adams", service: "Pest control", source: "Referral", value: "—", age: "2 hr", score: "Contacted" },
+  { name: "Daniel Reed", service: "Landscape maintenance", source: "Website", value: "—", age: "Yesterday", score: "Estimate" },
+];
+
+function Pill({ children, tone = "slate" }) {
+  return <span className={`pill ${tone}`}>{children}</span>;
+}
+
+function Logo({ compact = false }) {
+  return (
+    <button className="logo" onClick={() => location.hash = ""} aria-label="Property Pros home">
+      <span className="logo-mark"><Home size={compact ? 18 : 22} strokeWidth={2.7} /></span>
+      {!compact && <span><b>PROPERTY PROS</b><small>PSL</small></span>}
+    </button>
+  );
+}
+
+function QuoteModal({ onClose }) {
+  const [sent, setSent] = useState(false);
+  return (
+    <div className="modal-backdrop" onMouseDown={onClose}>
+      <div className="modal" onMouseDown={e => e.stopPropagation()}>
+        <button className="icon-button modal-x" onClick={onClose}><X size={19}/></button>
+        {!sent ? <>
+          <Pill tone="gold">FREE PROPERTY REVIEW</Pill>
+          <h2>What can our Pros handle for you?</h2>
+          <p>Tell us what you need. We’ll follow up with service options and straightforward pricing.</p>
+          <div className="form-grid">
+            <label>Full name<input placeholder="Your name" /></label>
+            <label>Phone<input placeholder="(772) 555-0123" /></label>
+            <label className="wide">Property address<input placeholder="Street address, city, ZIP" /></label>
+            <label>Service<select><option>Choose a service</option><option>Pool care</option><option>Pest control</option><option>Landscape care</option><option>Multiple services</option></select></label>
+            <label>Best time<select><option>Any time</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label>
+            <label className="wide">How can we help?<textarea placeholder="Tell us about your property..." /></label>
+          </div>
+          <button className="primary full" onClick={() => setSent(true)}>Request my quote <ArrowRight size={17}/></button>
+        </> : <div className="success">
+          <span><Check size={34}/></span><h2>You’re on our list.</h2>
+          <p>A Property Pros team member will contact you shortly at the number provided.</p>
+          <button className="primary" onClick={onClose}>Done</button>
+        </div>}
+      </div>
+    </div>
+  );
+}
+
+function PublicSite({ openQuote, enterPortal }) {
+  const [menu, setMenu] = useState(false);
+  return (
+    <div className="public-shell">
+      <div className="top-strip"><span>Serving Port St. Lucie & the Treasure Coast</span><a href="tel:7727826743"><Phone size={13}/> 772-782-6743</a></div>
+      <nav className="public-nav">
+        <Logo />
+        <div className={`nav-links ${menu ? "open" : ""}`}>
+          <a href="#services">Services</a><a href="#why">Why us</a><a href="#plans">Plans</a>
+          <button className="link-button" onClick={enterPortal}>Customer login</button>
+          <button className="primary small" onClick={openQuote}>Get a free quote</button>
+        </div>
+        <button className="mobile-menu icon-button" onClick={() => setMenu(!menu)}><Menu/></button>
+      </nav>
+
+      <main>
+        <section className="hero">
+          <div className="hero-glow one"/><div className="hero-glow two"/>
+          <div className="hero-copy">
+            <Pill tone="gold"><Sparkles size={13}/> YOUR COMPLETE PROPERTY CARE TEAM</Pill>
+            <h1>One call.<br/><em>Every solution.</em></h1>
+            <p>Pool care, pest control, and landscaping—managed by one trusted local team and one simple account.</p>
+            <div className="hero-actions">
+              <button className="primary" onClick={openQuote}>Get my free quote <ArrowRight size={18}/></button>
+              <a className="secondary" href="tel:7727826743"><Phone size={17}/> 772-782-6743</a>
+            </div>
+            <div className="trust-row"><span><Check/> Local Treasure Coast team</span><span><Check/> Easy recurring service</span><span><Check/> One point of contact</span></div>
+          </div>
+          <div className="hero-card">
+            <span className="eyebrow">YOUR PROPERTY AT A GLANCE</span>
+            <div className="property-card">
+              <div><span>Next visit</span><b>Pool service</b><small>Tomorrow · 10:00 AM</small></div><span className="round-icon blue"><Droplets/></span>
+            </div>
+            <div className="mini-services">
+              <div><Droplets/><span>Pool<b>Crystal clear</b></span><Check/></div>
+              <div><ShieldCheck/><span>Pest<b>Protected</b></span><Check/></div>
+              <div><Leaf/><span>Landscape<b>On schedule</b></span><Check/></div>
+            </div>
+            <div className="bundle"><span><Zap/> Bundle & save</span><b>One account. One bill.</b><small>Complete care made simple.</small></div>
+          </div>
+        </section>
+
+        <section className="numbers">
+          <div><b>3</b><span>Property services</span></div><div><b>1</b><span>Trusted local team</span></div><div><b>24/7</b><span>Online account access</span></div><div><b>100%</b><span>Built around convenience</span></div>
+        </section>
+
+        <section className="section" id="services">
+          <div className="section-heading"><div><Pill>OUR FAMILY OF BRANDS</Pill><h2>Everything your property needs.</h2></div><p>Choose one specialized service or bring everything together under the Property Pros umbrella.</p></div>
+          <div className="brand-grid">
+            {brands.map(b => <article className="brand-card" key={b.name} style={{"--brand":b.color}}>
+              <div className="brand-logo-wrap"><img src={b.img} alt={b.name}/></div>
+              <div className="brand-body"><span className="brand-tag"><b.icon size={15}/>{b.short}</span><p>{b.copy}</p><div><b>{b.price}</b><button onClick={openQuote}>Explore <ChevronRight size={16}/></button></div></div>
+            </article>)}
+          </div>
+        </section>
+
+        <section className="dark-section" id="why">
+          <div><Pill tone="gold">WHY PROPERTY PROS</Pill><h2>Less time managing vendors.<br/>More time enjoying your home.</h2></div>
+          <div className="benefit-grid">
+            {[["One simple account","View visits, invoices, messages, and every service in one place.",LayoutDashboard],["Local, accountable teams","One company stands behind the work across every division.",Users],["Service you can see","Photos, technician notes, and updates after every visit.",ClipboardCheck],["Built to bundle","Add services as your needs change without starting over.",Zap]].map(([t,c,I])=><div key={t}><span><I/></span><h3>{t}</h3><p>{c}</p></div>)}
+          </div>
+        </section>
+
+        <section className="section bundle-section" id="plans">
+          <div className="bundle-copy"><Pill tone="green">SMARTER PROPERTY CARE</Pill><h2>Start with one.<br/>Add more when you’re ready.</h2><p>Your Property Pros account grows with your home. Combine pool, pest, and landscape care for fewer calls, simpler billing, and coordinated service.</p><button className="primary" onClick={openQuote}>Build my service plan <ArrowRight size={17}/></button></div>
+          <div className="stack-card">
+            {brands.map((b,i)=><div className="stack-item" key={b.name}><span style={{background:b.color}}><b.icon/></span><div><small>{i ? "ADD ANY TIME" : "START HERE"}</small><b>{b.name}</b></div><Check/></div>)}
+            <div className="stack-total"><span>PROPERTY PROS BUNDLE</span><b>One coordinated plan</b><small>Custom quoted for your home</small></div>
+          </div>
+        </section>
+      </main>
+      <footer><Logo/><p>Locally built for Treasure Coast homeowners.</p><a href="tel:7727826743">772-782-6743</a><small>© 2026 Property Pros PSL LLC</small></footer>
+    </div>
+  );
+}
+
+const nav = [
+  ["Overview", LayoutDashboard], ["Schedule", CalendarDays], ["Customers", Users], ["Leads", Sparkles],
+  ["Invoices", CreditCard], ["Team", Wrench], ["Messages", MessageSquare], ["Reports", BarChart3]
+];
+
+function Metric({ label, value, detail, icon: Icon, tone }) {
+  return <div className="metric"><span className={`metric-icon ${tone}`}><Icon/></span><div><small>{label}</small><b>{value}</b><em>{detail}</em></div></div>;
+}
+
+function Overview() {
+  return <>
+    <div className="dashboard-title"><div><span>MONDAY, JULY 28</span><h1>Good afternoon, Jody.</h1><p>Here’s what’s happening across Property Pros today.</p></div><button className="primary"><Plus size={17}/> New job</button></div>
+    <div className="metrics">
+      <Metric label="MONTHLY RECURRING REVENUE" value="$42,680" detail="↑ 12.4% this month" icon={CircleDollarSign} tone="green"/>
+      <Metric label="ACTIVE CUSTOMERS" value="284" detail="+18 this month" icon={Users} tone="blue"/>
+      <Metric label="JOBS TODAY" value="23" detail="19 on schedule" icon={CalendarDays} tone="purple"/>
+      <Metric label="OPEN LEADS" value="31" detail="$8,240 potential MRR" icon={Sparkles} tone="gold"/>
+    </div>
+    <div className="dashboard-grid">
+      <section className="panel schedule-panel">
+        <div className="panel-head"><div><h2>Today’s schedule</h2><p>23 jobs · 6 technicians</p></div><button>View calendar <ArrowRight size={15}/></button></div>
+        <div className="job-list">{jobs.map(j=><div className="job-row" key={j.time+j.customer}><b>{j.time}</b><span className={`job-dot ${j.color}`}/><div><strong>{j.type}</strong><small>{j.customer} · {j.tech}</small></div><Pill tone={j.color}>{j.status}</Pill><button className="more">•••</button></div>)}</div>
+      </section>
+      <section className="panel revenue-panel">
+        <div className="panel-head"><div><h2>Recurring revenue</h2><p>Last 6 months</p></div><Pill tone="green">+31.6%</Pill></div>
+        <div className="chart">
+          {[44,51,48,62,70,82].map((h,i)=><div key={i}><span style={{height:`${h}%`}}/><small>{["Feb","Mar","Apr","May","Jun","Jul"][i]}</small></div>)}
+        </div>
+        <div className="revenue-split">{brands.map((b,i)=><div key={b.name}><span style={{background:b.color}}/><small>{b.short}</small><b>{["$21,450","$9,780","$11,450"][i]}</b></div>)}</div>
+      </section>
+      <section className="panel lead-panel">
+        <div className="panel-head"><div><h2>New leads</h2><p>Needs attention</p></div><button>View all <ArrowRight size={15}/></button></div>
+        <div>{leads.map(l=><div className="lead-row" key={l.name}><span className="avatar">{l.name.split(" ").map(x=>x[0]).join("")}</span><div><b>{l.name}</b><small>{l.service} · {l.age}</small></div><div><Pill tone={l.score==="Hot"?"red":"slate"}>{l.score}</Pill><b>{l.value}</b></div></div>)}</div>
+      </section>
+      <section className="panel activity-panel">
+        <div className="panel-head"><div><h2>Operations pulse</h2><p>Across all divisions</p></div></div>
+        {[["Route completion","78%","18 of 23 jobs",78],["Invoices collected","91%","$37,420 of $41,100",91],["Estimate close rate","46%","7-day rolling",46],["Customer retention","96%","Trailing 90 days",96]].map(([a,b,c,d])=><div className="progress-row" key={a}><div><b>{a}</b><strong>{b}</strong></div><span><i style={{width:`${d}%`}}/></span><small>{c}</small></div>)}
+      </section>
+    </div>
+  </>;
+}
+
+function GenericPage({ active }) {
+  const content = {
+    Schedule:["Dispatch board","Drag jobs between technicians and routes.",jobs.map(j=>[j.time,j.customer,j.type,j.tech,j.status])],
+    Customers:["Customer accounts","284 active customers across three divisions.",[["M. Robinson","Pool Full Service","$165/mo","Active"],["A. Turner","Pest Protection","Custom","Active"],["T. Harris","Landscape Care","Custom","Active"],["K. Jensen","Multi-service lead","$425/mo","Proposal"]]],
+    Leads:["Sales pipeline","Track every inquiry from first call to recurring customer.",leads.map(l=>[l.name,l.service,l.source,l.value,l.score])],
+    Invoices:["Billing & collections","Recurring charges, open balances, and payment history.",[["INV-2048","Robinson Residence","Jul 25","$165.00","Paid"],["INV-2047","Turner Residence","Jul 25","$129.00","Paid"],["INV-2046","Foster Residence","Jul 24","$150.00","Due"],["INV-2045","Harris Residence","Jul 22","$220.00","Past due"]]],
+    Team:["Team & field operations","Routes, productivity, time tracking, and quality scores.",[["Carlos M.","Pool Technician","8 jobs today","98%"],["Maya J.","Pest Technician","6 jobs today","96%"],["Devon R.","Landscape Lead","7 jobs today","94%"],["Jody G.","Owner / Manager","2 estimates","—"]]],
+    Messages:["Unified inbox","Customer conversations from every service division.",[["Sarah Miller","Interested in full property bundle","8 min","Unread"],["Ronald Clark","Can we start pool service Friday?","42 min","Unread"],["Nicole Adams","Thank you for the update","2 hr","Read"],["Daniel Reed","Photo attached: side yard","Yesterday","Read"]]],
+    Reports:["Business reporting","Revenue, retention, technician performance, and growth.",[["Recurring revenue","$42,680","+12.4%","On track"],["Gross margin","48.2%","+2.1 pts","On track"],["Customer acquisition cost","$118","-$14","Improving"],["Annualized revenue","$512,160","+31.6%","On track"]]],
+  }[active];
+  return <><div className="dashboard-title"><div><span>PROPERTY PROS OPERATIONS</span><h1>{content[0]}</h1><p>{content[1]}</p></div><button className="primary"><Plus size={17}/> Add new</button></div>
+    <section className="panel table-panel"><div className="table-tools"><div className="search"><Search size={17}/><input placeholder={`Search ${active.toLowerCase()}...`}/></div><button className="secondary">Filter</button></div>
+      <div className="data-table">{content[2].map((row,i)=><div className="data-row" key={i}>{row.map((c,j)=><span key={j} className={j===0?"strong":""}>{c}</span>)}<button className="more">•••</button></div>)}</div>
+    </section></>;
+}
+
+function Admin({ exitPortal }) {
+  const [active, setActive] = useState("Overview");
+  const [collapsed, setCollapsed] = useState(false);
+  return (
+    <div className={`admin-shell ${collapsed?"collapsed":""}`}>
+      <aside>
+        <div className="aside-logo"><Logo compact={collapsed}/><button className="collapse-button" onClick={()=>setCollapsed(!collapsed)}><ChevronRight/></button></div>
+        <div className="division-picker"><span className="round-icon gold"><Home/></span>{!collapsed&&<div><small>WORKSPACE</small><b>All divisions</b></div>}</div>
+        <nav>{nav.map(([n,I])=><button key={n} className={active===n?"active":""} onClick={()=>setActive(n)}><I/>{!collapsed&&<span>{n}</span>}{n==="Leads"&&!collapsed&&<em>31</em>}</button>)}</nav>
+        <div className="aside-bottom">{!collapsed&&<div className="support"><Phone/><div><small>PROPERTY PROS LINE</small><b>772-782-6743</b></div></div>}<button className="profile" onClick={exitPortal}><span>JG</span>{!collapsed&&<div><b>Jody Gottschalk</b><small>Owner · Sign out</small></div>}</button></div>
+      </aside>
+      <div className="admin-main">
+        <header><div className="search"><Search/><input placeholder="Search customers, jobs, invoices..."/><kbd>⌘ K</kbd></div><div><button className="icon-button notification"><Bell/><i/></button><button className="primary small"><Plus/> Quick add</button></div></header>
+        <main>{active==="Overview"?<Overview/>:<GenericPage active={active}/>}</main>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [portal, setPortal] = useState(false);
+  const [quote, setQuote] = useState(false);
+  const enterPortal=()=>{setPortal(true);location.hash="portal";};
+  const exitPortal=()=>{setPortal(false);location.hash="";};
+  return <>{portal?<Admin exitPortal={exitPortal}/>:<PublicSite openQuote={()=>setQuote(true)} enterPortal={enterPortal}/>}
+    {quote&&<QuoteModal onClose={()=>setQuote(false)}/>}</>;
+}
+
+export default App;
