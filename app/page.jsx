@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 const brands = [
+  { name: "Property Pros PSL", short: "Maintenance", color: "#c9252c", img: "/brands/Property-Pros-PSL-Updated-White-Background.png", copy: "Ongoing home and property maintenance through one simple monthly membership.", price: "Monthly membership", icon: Wrench },
   { name: "Piranha Pools", short: "Pools", color: "#00a8d8", img: "/brands/Piranha-Pools-PSL.png", copy: "Weekly pool care, inspections, repairs, and cleanups.", price: "From $165/mo", icon: Droplets },
   { name: "Pesky Pests", short: "Pest", color: "#ef3d42", img: "/brands/Pesky-Pests-PSL.png", copy: "Dependable home pest protection with recurring service.", price: "Request pricing", icon: ShieldCheck },
   { name: "Paradise Properties Landscape", short: "Landscape", color: "#51aa42", img: "/brands/Paradise-Properties-Landscape-PSL-White-Background.png", copy: "Lawn, landscape, and exterior property care.", price: "Request pricing", icon: Leaf },
@@ -35,8 +36,7 @@ function Pill({ children, tone = "slate" }) {
 function Logo({ compact = false }) {
   return (
     <button className="logo" onClick={() => location.hash = ""} aria-label="Property Pros home">
-      <span className="logo-mark"><Home size={compact ? 18 : 22} strokeWidth={2.7} /></span>
-      {!compact && <span><b>PROPERTY PROS</b><small>PSL</small></span>}
+      <img className={compact ? "brand-logo compact" : "brand-logo"} src="/brands/Property-Pros-PSL-Updated-White-Background.png" alt="Property Pros PSL"/>
     </button>
   );
 }
@@ -55,7 +55,7 @@ function QuoteModal({ onClose }) {
             <label>Full name<input placeholder="Your name" /></label>
             <label>Phone<input placeholder="(772) 555-0123" /></label>
             <label className="wide">Property address<input placeholder="Street address, city, ZIP" /></label>
-            <label>Service<select><option>Choose a service</option><option>Pool care</option><option>Pest control</option><option>Landscape care</option><option>Multiple services</option></select></label>
+            <label>Service<select><option>Choose a service</option><option>Property maintenance membership</option><option>Pool care</option><option>Pest control</option><option>Landscape care</option><option>Multiple services</option></select></label>
             <label>Best time<select><option>Any time</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label>
             <label className="wide">How can we help?<textarea placeholder="Tell us about your property..." /></label>
           </div>
@@ -78,7 +78,7 @@ function PublicSite({ openQuote, enterPortal }) {
       <nav className="public-nav">
         <Logo />
         <div className={`nav-links ${menu ? "open" : ""}`}>
-          <a href="#services">Services</a><a href="#why">Why us</a><a href="#plans">Plans</a>
+          <a href="#maintenance">Property Maintenance</a><a href="#services">All Services</a><a href="#membership">Monthly Membership</a><a href="#why">Why Us</a>
           <button className="link-button" onClick={enterPortal}>Customer login</button>
           <button className="primary small" onClick={openQuote}>Get a free quote</button>
         </div>
@@ -91,12 +91,12 @@ function PublicSite({ openQuote, enterPortal }) {
           <div className="hero-copy">
             <Pill tone="gold"><Sparkles size={13}/> YOUR COMPLETE PROPERTY CARE TEAM</Pill>
             <h1>One call.<br/><em>Every solution.</em></h1>
-            <p>Pool care, pest control, and landscaping—managed by one trusted local team and one simple account.</p>
+            <p>Monthly property maintenance, pool care, pest control, and landscaping—coordinated by one trusted local team.</p>
             <div className="hero-actions">
               <button className="primary" onClick={openQuote}>Get my free quote <ArrowRight size={18}/></button>
               <a className="secondary" href="tel:7727826743"><Phone size={17}/> 772-782-6743</a>
             </div>
-            <div className="trust-row"><span><Check/> Local Treasure Coast team</span><span><Check/> Easy recurring service</span><span><Check/> One point of contact</span></div>
+            <div className="trust-row"><span><Check/> Monthly property checkups</span><span><Check/> Local Treasure Coast team</span><span><Check/> One point of contact</span></div>
           </div>
           <div className="hero-card">
             <span className="eyebrow">YOUR PROPERTY AT A GLANCE</span>
@@ -107,17 +107,38 @@ function PublicSite({ openQuote, enterPortal }) {
               <div><Droplets/><span>Pool<b>Crystal clear</b></span><Check/></div>
               <div><ShieldCheck/><span>Pest<b>Protected</b></span><Check/></div>
               <div><Leaf/><span>Landscape<b>On schedule</b></span><Check/></div>
+              <div><Wrench/><span>Maintenance<b>Handled</b></span><Check/></div>
             </div>
             <div className="bundle"><span><Zap/> Bundle & save</span><b>One account. One bill.</b><small>Complete care made simple.</small></div>
           </div>
         </section>
 
         <section className="numbers">
-          <div><b>3</b><span>Property services</span></div><div><b>1</b><span>Trusted local team</span></div><div><b>24/7</b><span>Online account access</span></div><div><b>100%</b><span>Built around convenience</span></div>
+          <div><b>4</b><span>Property services</span></div><div><b>1</b><span>Trusted local team</span></div><div><b>Monthly</b><span>Maintenance membership</span></div><div><b>24/7</b><span>Online account access</span></div>
+        </section>
+
+        <section className="maintenance-section" id="maintenance">
+          <div className="maintenance-copy">
+            <Pill tone="red"><Wrench size={13}/> PROPERTY MAINTENANCE</Pill>
+            <h2>Your home’s ongoing to-do list,<br/>handled every month.</h2>
+            <p>The Property Pros PSL monthly maintenance membership gives homeowners one dependable team for routine upkeep, preventive checks, and the small jobs that are easy to postpone.</p>
+            <div className="maintenance-actions">
+              <button className="primary red-action" onClick={openQuote}>Ask about membership <ArrowRight size={17}/></button>
+              <a href="tel:7727826743"><Phone size={16}/> Call 772-782-6743</a>
+            </div>
+          </div>
+          <div className="maintenance-list">
+            {[
+              ["Routine property walkthroughs","We spot developing maintenance needs before they become larger repairs."],
+              ["Minor home maintenance","A recurring visit for approved small repairs, adjustments, and upkeep."],
+              ["Priority scheduling","Members receive one reliable contact and preferred scheduling for service requests."],
+              ["Simple monthly reporting","Clear visit notes, recommendations, and a record of work completed."]
+            ].map(([title,copy])=><div key={title}><span><Check/></span><div><b>{title}</b><p>{copy}</p></div></div>)}
+          </div>
         </section>
 
         <section className="section" id="services">
-          <div className="section-heading"><div><Pill>OUR FAMILY OF BRANDS</Pill><h2>Everything your property needs.</h2></div><p>Choose one specialized service or bring everything together under the Property Pros umbrella.</p></div>
+          <div className="section-heading"><div><Pill>OUR FAMILY OF BRANDS</Pill><h2>Everything your property needs.</h2></div><p>Start with monthly property maintenance or choose one of our specialized service divisions.</p></div>
           <div className="brand-grid">
             {brands.map(b => <article className="brand-card" key={b.name} style={{"--brand":b.color}}>
               <div className="brand-logo-wrap"><img src={b.img} alt={b.name}/></div>
@@ -133,11 +154,12 @@ function PublicSite({ openQuote, enterPortal }) {
           </div>
         </section>
 
-        <section className="section bundle-section" id="plans">
-          <div className="bundle-copy"><Pill tone="green">SMARTER PROPERTY CARE</Pill><h2>Start with one.<br/>Add more when you’re ready.</h2><p>Your Property Pros account grows with your home. Combine pool, pest, and landscape care for fewer calls, simpler billing, and coordinated service.</p><button className="primary" onClick={openQuote}>Build my service plan <ArrowRight size={17}/></button></div>
+        <section className="section bundle-section" id="membership">
+          <div className="bundle-copy"><Pill tone="red">MONTHLY PROPERTY MAINTENANCE</Pill><h2>One monthly subscription.<br/>A better-maintained home.</h2><p>We begin with a property walkthrough, build a recurring maintenance plan around your home, and provide a custom monthly price based on its size and needs. Add pool, pest, or landscape service for one coordinated property-care plan.</p><ul className="membership-points"><li><Check/> Scheduled recurring maintenance visit</li><li><Check/> Preventive property inspection</li><li><Check/> Priority help for approved service requests</li><li><Check/> One account, one team, one monthly plan</li></ul><button className="primary red-action" onClick={openQuote}>Get my membership quote <ArrowRight size={17}/></button><small className="plan-note">Membership scope and pricing are customized after a property walkthrough. Materials and larger repairs are quoted separately.</small></div>
           <div className="stack-card">
-            {brands.map((b,i)=><div className="stack-item" key={b.name}><span style={{background:b.color}}><b.icon/></span><div><small>{i ? "ADD ANY TIME" : "START HERE"}</small><b>{b.name}</b></div><Check/></div>)}
-            <div className="stack-total"><span>PROPERTY PROS BUNDLE</span><b>One coordinated plan</b><small>Custom quoted for your home</small></div>
+            <div className="membership-card-head"><img src="/brands/Property-Pros-PSL-Updated-White-Background.png" alt="Property Pros PSL"/><span>MONTHLY HOME CARE MEMBERSHIP</span><h3>Built around your property.</h3><p>Your customized plan can coordinate every Property Pros service.</p></div>
+            {brands.slice(1).map((b)=><div className="stack-item" key={b.name}><span style={{background:b.color}}><b.icon/></span><div><small>OPTIONAL SERVICE DIVISION</small><b>{b.name}</b></div><Plus/></div>)}
+            <div className="stack-total"><span>PROPERTY PROS PSL</span><b>One coordinated monthly plan</b><small>Custom quoted for your home</small></div>
           </div>
         </section>
       </main>
