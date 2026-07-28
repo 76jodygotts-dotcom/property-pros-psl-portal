@@ -31,3 +31,23 @@
 .public-shell footer .logo{background:white;border-radius:9px;padding:3px 8px}
 @media(max-width:1000px){.maintenance-section{grid-template-columns:1fr;gap:36px;padding:72px 7%}}
 @media(max-width:700px){.public-nav{height:74px}.logo .brand-logo{width:118px;height:62px}.maintenance-section{padding:65px 22px}.maintenance-copy h2{font-size:34px}.maintenance-actions{align-items:flex-start;flex-direction:column}.maintenance-list{padding:8px 18px}.brand-grid{grid-template-columns:1fr}}
+
+/* Full-width branded homepage hero */
+.hero{min-height:680px;grid-template-columns:1.08fr .92fr;gap:70px;background:
+  radial-gradient(circle at 82% 14%,rgba(201,37,44,.24),transparent 27%),
+  radial-gradient(circle at 18% 92%,rgba(20,126,168,.2),transparent 30%),
+  linear-gradient(125deg,#06131d 0%,#0a2232 58%,#101a25 100%)}
+.hero-copy h1 em{color:#ef343d}.hero-copy>p{color:#d4dde2;max-width:680px}
+.hero-actions .primary{background:#c9252c;color:#fff;box-shadow:0 12px 30px rgba(201,37,44,.3)}
+.hero-showcase{position:relative;display:grid;gap:14px;padding:28px;border:1px solid rgba(255,255,255,.14);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.035));box-shadow:0 35px 90px rgba(0,0,0,.28);backdrop-filter:blur(12px)}
+.hero-showcase:before{content:"";position:absolute;inset:-1px;border-radius:28px;padding:1px;background:linear-gradient(135deg,rgba(255,255,255,.38),transparent 46%,rgba(201,37,44,.36));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.hero-membership{display:grid;grid-template-columns:54px 1fr;gap:15px;align-items:start;padding:22px;border-radius:19px;background:linear-gradient(135deg,#c9252c,#9f1820);box-shadow:0 18px 42px rgba(0,0,0,.24)}
+.hero-membership-icon{width:50px;height:50px;border-radius:14px;background:rgba(255,255,255,.16);display:grid;place-items:center}.hero-membership-icon svg{width:24px}
+.hero-membership small{font-size:9px;font-weight:800;letter-spacing:1.2px;color:#ffd9da}.hero-membership h2{font:800 23px/1.1 "Manrope";margin:6px 0 8px;letter-spacing:-.5px}.hero-membership p{grid-column:2;margin:0;color:#ffe8e9;font-size:12px;line-height:1.55}
+.hero-membership button{grid-column:2;border:0;background:transparent;color:#fff;padding:8px 0 0;font-size:11px;font-weight:800;display:flex;align-items:center;gap:7px;cursor:pointer;width:max-content}
+.hero-service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.hero-service{min-height:125px;padding:17px 15px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:rgba(4,18,27,.62);color:white;text-decoration:none;display:grid;grid-template-columns:1fr auto;align-content:space-between;transition:.2s}.hero-service:hover{transform:translateY(-3px);background:rgba(255,255,255,.1)}
+.hero-service>span{width:37px;height:37px;border-radius:11px;display:grid;place-items:center}.hero-service>span svg{width:19px}.hero-service.blue>span{background:#123f54;color:#28b8ee}.hero-service.red>span{background:#4b2025;color:#ff6269}.hero-service.green>span{background:#173c2d;color:#68d096}
+.hero-service>svg{width:17px;color:#8196a3}.hero-service div{grid-column:1/-1}.hero-service small,.hero-service b{display:block}.hero-service small{font-size:8px;color:#8fa4af;text-transform:uppercase;letter-spacing:.6px}.hero-service b{font:700 13px "Manrope";margin-top:4px}
+.hero-promise{display:flex;align-items:center;gap:8px;color:#b7c7cf;font-size:11px;padding:2px 4px}.hero-promise svg{width:16px;color:#5ed0a0}
+@media(max-width:1000px){.hero{grid-template-columns:1fr}.hero-showcase{max-width:680px}}
+@media(max-width:700px){.hero{padding-top:52px}.hero-showcase{padding:15px;border-radius:20px}.hero-membership{grid-template-columns:45px 1fr;padding:17px}.hero-membership-icon{width:42px;height:42px}.hero-membership h2{font-size:19px}.hero-service-grid{grid-template-columns:1fr}.hero-service{min-height:78px;grid-template-columns:42px 1fr auto;align-items:center}.hero-service div{grid-column:auto}.hero-service>svg{grid-column:3}.hero-promise{line-height:1.5}}
