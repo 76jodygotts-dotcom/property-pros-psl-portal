@@ -43,6 +43,24 @@ function Logo({ compact = false }) {
 
 function QuoteModal({ onClose }) {
   const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [form, setForm] = useState({ full_name: "", phone: "", email: "", property_address: "", service: "", preferred_time: "Any time", message: "" });
+  const change = event => setForm(current => ({ ...current, [event.target.name]: event.target.value }));
+  async function submit(event) {
+    event.preventDefault(); setBusy(true); setError("");
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+    if (!url || !key) { setError("The quote connection is temporarily unavailable. Please call 772-782-6743."); setBusy(false); return; }
+    try {
+      const response = await fetch(`${url}/rest/v1/quote_requests`, { method: "POST", headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json", Prefer: "return=minimal" }, body: JSON.stringify({ ...form, source: "Property Pros website" }) });
+      if (!response.ok) throw new Error(await response.text());
+      setSent(true);
+    } catch {
+      setError("We couldn’t submit the request. Please call 772-782-6743 and we’ll help you right away.");
+    }
+    setBusy(false);
+  }
   return (
     <div className="modal-backdrop" onMouseDown={onClose}>
       <div className="modal" onMouseDown={e => e.stopPropagation()}>
@@ -51,15 +69,15 @@ function QuoteModal({ onClose }) {
           <Pill tone="gold">FREE PROPERTY REVIEW</Pill>
           <h2>What can our Pros handle for you?</h2>
           <p>Tell us what you need. We’ll follow up with service options and straightforward pricing.</p>
-          <div className="form-grid">
-            <label>Full name<input placeholder="Your name" /></label>
-            <label>Phone<input placeholder="(772) 555-0123" /></label>
-            <label className="wide">Property address<input placeholder="Street address, city, ZIP" /></label>
-            <label>Service<select><option>Choose a service</option><option>Property maintenance membership</option><option>Pool care</option><option>Pest control</option><option>Landscape care</option><option>Multiple services</option></select></label>
-            <label>Best time<select><option>Any time</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label>
-            <label className="wide">How can we help?<textarea placeholder="Tell us about your property..." /></label>
-          </div>
-          <button className="primary full" onClick={() => setSent(true)}>Request my quote <ArrowRight size={17}/></button>
+          <form onSubmit={submit}><div className="form-grid">
+            <label>Full name<input name="full_name" value={form.full_name} onChange={change} placeholder="Your name" required /></label>
+            <label>Phone<input name="phone" value={form.phone} onChange={change} placeholder="(772) 555-0123" required /></label>
+            <label className="wide">Email<input name="email" type="email" value={form.email} onChange={change} placeholder="you@example.com" /></label>
+            <label className="wide">Property address<input name="property_address" value={form.property_address} onChange={change} placeholder="Street address, city, ZIP" required /></label>
+            <label>Service<select name="service" value={form.service} onChange={change} required><option value="">Choose a service</option><option>Property maintenance membership</option><option>Pool care</option><option>Pest control</option><option>Landscape care</option><option>Multiple services</option></select></label>
+            <label>Best time<select name="preferred_time" value={form.preferred_time} onChange={change}><option>Any time</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label>
+            <label className="wide">How can we help?<textarea name="message" value={form.message} onChange={change} placeholder="Tell us about your property..." /></label>
+          </div>{error && <p className="form-error">{error}</p>}<button className="primary full" disabled={busy}>{busy ? "Sending…" : "Request my quote"} <ArrowRight size={17}/></button></form>
         </> : <div className="success">
           <span><Check size={34}/></span><h2>You’re on our list.</h2>
           <p>A Property Pros team member will contact you shortly at the number provided.</p>
@@ -252,11 +270,9 @@ function Admin({ exitPortal }) {
 }
 
 function App() {
-  const [portal, setPortal] = useState(false);
   const [quote, setQuote] = useState(false);
-  const enterPortal=()=>{setPortal(true);location.hash="portal";};
-  const exitPortal=()=>{setPortal(false);location.hash="";};
-  return <>{portal?<Admin exitPortal={exitPortal}/>:<PublicSite openQuote={()=>setQuote(true)} enterPortal={enterPortal}/>}
+  const enterPortal=()=>{window.location.href="https://operations.propprospsl.com";};
+  return <><PublicSite openQuote={()=>setQuote(true)} enterPortal={enterPortal}/>
     {quote&&<QuoteModal onClose={()=>setQuote(false)}/>}</>;
 }
 
