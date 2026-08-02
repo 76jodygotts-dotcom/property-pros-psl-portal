@@ -53,14 +53,22 @@ function QuoteModal({ onClose }) {
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
     if (!url || !key) { setError("The quote connection is temporarily unavailable. Please call 772-782-6743."); setBusy(false); return; }
     try {
-      const response = await fetch(`${url}/rest/v1/quote_requests`, {
+      const response = await fetch(`${url}/rest/v1/rpc/submit_quote_request`, {
         method: "POST",
         headers: {
           apikey: key,
           "Content-Type": "application/json",
           Prefer: "return=minimal",
         },
-        body: JSON.stringify({ ...form, source: "Property Pros website" }),
+        body: JSON.stringify({
+          p_full_name: form.full_name,
+          p_phone: form.phone,
+          p_email: form.email || null,
+          p_property_address: form.property_address,
+          p_service: form.service,
+          p_preferred_time: form.preferred_time || null,
+          p_message: form.message || null,
+        }),
       });
       if (!response.ok) throw new Error(await response.text());
       setSent(true);
