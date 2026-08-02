@@ -53,7 +53,10 @@ function QuoteModal({ onClose }) {
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
     if (!url || !key) { setError("The quote connection is temporarily unavailable. Please call 772-782-6743."); setBusy(false); return; }
     try {
-      const response = await fetch(`${url}/rest/v1/rpc/submit_quote_request`, {
+      // Accept either the Supabase project URL or the Data API REST URL.
+      // This prevents a duplicated `/rest/v1/rest/v1` path in production.
+      const projectUrl = url.trim().replace(/\/+$/, "").replace(/\/rest\/v1$/, "");
+      const response = await fetch(`${projectUrl}/rest/v1/rpc/submit_quote_request`, {
         method: "POST",
         headers: {
           apikey: key,
