@@ -93,7 +93,7 @@ function QuoteModal({ onClose }) {
             <label>Phone<input name="phone" value={form.phone} onChange={change} placeholder="(772) 555-0123" required /></label>
             <label className="wide">Email<input name="email" type="email" value={form.email} onChange={change} placeholder="you@example.com" /></label>
             <label className="wide">Property address<input name="property_address" value={form.property_address} onChange={change} placeholder="Street address, city, ZIP" required /></label>
-            <label>Service<select name="service" value={form.service} onChange={change} required><option value="">Choose a service</option><option>Property maintenance membership</option><option>Pool care</option><option>Pest control</option><option>Landscape care</option><option>Multiple services</option></select></label>
+            <label>Service<select name="service" value={form.service} onChange={change} required><option value="">Choose a service</option><option>Property maintenance membership</option><option>Pool care</option><option>Pressure washing / soft washing</option><option>Pest control</option><option>Landscape care</option><option>Multiple services</option></select></label>
             <label>Best time<select name="preferred_time" value={form.preferred_time} onChange={change}><option>Any time</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label>
             <label className="wide">How can we help?<textarea name="message" value={form.message} onChange={change} placeholder="Tell us about your property..." /></label>
           </div>{error && <p className="form-error">{error}</p>}<button className="primary full" disabled={busy}>{busy ? "Sending…" : "Request my quote"} <ArrowRight size={17}/></button></form>
@@ -206,7 +206,7 @@ function PublicSite({ openQuote, enterPortal }) {
           </div>
         </section>
       </main>
-      <footer><Logo/><p>Locally built for Treasure Coast homeowners.</p><a href="tel:7727826743">772-782-6743</a><small>© 2026 Property Pros PSL LLC</small></footer>
+      <footer><Logo/><p>Locally built for Treasure Coast homeowners.</p><nav aria-label="Our services"><a href="/pressure-washing">Pressure Washing</a> · <a href="/pool-cleaning">Pool Cleaning</a> · <a href="/lawn-care">Lawn Care</a></nav><a href="tel:7727826743">772-782-6743</a><small>© 2026 Property Pros PSL LLC</small></footer>
     </div>
   );
 }
